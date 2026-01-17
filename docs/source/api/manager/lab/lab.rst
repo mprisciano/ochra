@@ -1,4 +1,4 @@
-ochra\_manager.lab
+ochra.manager.lab
 ==========================
 
 

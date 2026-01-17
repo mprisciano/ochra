@@ -1,4 +1,4 @@
-ochra\_manager package
+ochra.manager package
 ======================
 
 .. toctree::
