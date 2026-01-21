@@ -1,4 +1,4 @@
-ochra\_manager.station
+ochra.manager.station
 ==============================
 
 .. toctree::

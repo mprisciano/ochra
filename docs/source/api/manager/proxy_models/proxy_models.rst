@@ -1,4 +1,4 @@
-ochra\_manager.proxy\_models
+ochra.manager.proxy\_models
 ====================================
 
 .. toctree::

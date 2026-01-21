@@ -1,6 +1,6 @@
 .. index.rst
 
-Welcome to ochra Docs
+Welcome to OChRA Docs
 ========================
 
 This is the main documentation for the framework.
@@ -18,4 +18,5 @@ This is the main documentation for the framework.
 
    api/common/common
    api/manager/manager
+   api/discovery/discovery
 
