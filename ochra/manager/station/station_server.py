@@ -349,6 +349,8 @@ class StationServer:
             )
             type_hints = get_type_hints(method)
             for key in args.keys():
+                if key == "args":
+                    continue
                 args[key] = type_hints[key](args[key])
             method(**args)
             return
