@@ -4,9 +4,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 
-
 from pydantic import BaseModel
-from typing import Dict, Optional, Any
+from typing import Dict, Optional, Any, get_type_hints
 from pathlib import Path, PurePath
 import shutil
 from os import remove
@@ -36,7 +35,6 @@ from jinja2 import Environment, FileSystemLoader
 from fastapi.staticfiles import StaticFiles
 
 
-
 def _is_path(obj: Any) -> bool:
     """Check if an object is a path.
     Args:
@@ -50,7 +48,8 @@ def _is_path(obj: Any) -> bool:
     except (TypeError, ValueError):
         return False
 
-#TODO what is the point of this class
+
+# TODO what is the point of this class
 class operationExecute(BaseModel):
     operation: str
     deviceName: str
@@ -83,7 +82,7 @@ class StationServer:
             station_port (int, optional): Port to run the server on. Defaults to 8000.
         """
         self._logging_path = Path(logging_path).resolve()
-        
+
         configure_station_logging(log_root_path=self._logging_path)
         self._logger = logging.getLogger(__name__)
 
@@ -161,7 +160,9 @@ class StationServer:
         """
         start the server
         """
-        self._logger.info(f"Starting station server {self._name} on {self._ip}:{self.port}")
+        self._logger.info(
+            f"Starting station server {self._name} on {self._ip}:{self.port}"
+        )
         uvicorn.run(self._app, host=self._ip, port=self.port)
 
     @property
@@ -180,7 +181,7 @@ class StationServer:
     async def get_station(self, request: Request) -> HTMLResponse:
         """
         get the station html page
-        
+
         Args:
             request (Request): fastapi request object
 
@@ -199,7 +200,7 @@ class StationServer:
     async def get_station_devices(self, request: Request) -> HTMLResponse:
         """
         get the station devices html page
-        
+
         Args:
             request (Request): fastapi request object
 
@@ -343,11 +344,20 @@ class StationServer:
 
         try:
             method = getattr(device, command_name)
-            self._logger.debug(f"Calling method {command_name} on device {device_id} with args: {args}")
+            self._logger.debug(
+                f"Calling method {command_name} on device {device_id} with args: {args}"
+            )
+            type_hints = get_type_hints(method)
+            for key in args.keys():
+                if key == "args":
+                    continue
+                args[key] = type_hints[key](args[key])
             method(**args)
             return
         except Exception as e:
-            self._logger.error(f"Error occurred while calling method {command_name} on device {device_id}: {e}")
+            self._logger.error(
+                f"Error occurred while calling method {command_name} on device {device_id}: {e}"
+            )
             raise HTTPException(
                 status_code=500, detail="Unexpected error in running method"
             )
@@ -492,7 +502,9 @@ class StationServer:
         except Exception as e:
             raise HTTPException(500, detail=str(e))
 
-    def _upload_result_data(self, result: PurePath, operation_result: OperationResult) -> None:
+    def _upload_result_data(
+        self, result: PurePath, operation_result: OperationResult
+    ) -> None:
         """
         Uploads result data (file or directory) to the lab server.
 
