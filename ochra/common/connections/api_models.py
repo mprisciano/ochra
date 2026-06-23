@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field
 from ..utils.enum import PatchType
 
@@ -26,7 +26,7 @@ class ObjectCallResponse(BaseModel):
     return_data: Any
     """The data returned by the method call."""
 
-    warnings: str = Field(default=None)
+    warnings: Optional[str] = Field(default=None)
     """Any warnings generated during the method call. Defaults to None."""
 
 

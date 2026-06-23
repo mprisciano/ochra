@@ -28,7 +28,7 @@ class Station(DataModel):
     status: ActivityStatus = ActivityStatus.IDLE
     """Current operational status (default: IDLE)."""
 
-    inventory: Inventory = Field(default=None)
+    inventory: Optional[Inventory] = Field(default=None)
     """Inventory associated with the station."""
 
     devices: List[Type[Device]] = Field(default_factory=list)

@@ -20,13 +20,13 @@ class Device(DataModel):
     name: str
     """Device name."""
 
-    inventory: Inventory = Field(default=None)
+    inventory: Optional[Inventory] = Field(default=None)
     """Associated inventory object."""
 
     status: ActivityStatus = ActivityStatus.IDLE
     """Current operational status of the device (e.g., idle, busy), defaults to IDLE."""
 
-    owner_station: UUID = Field(default=None)
+    owner_station: Optional[UUID] = Field(default=None)
     """Station ID to which the device belongs."""
 
     _endpoint = "devices"
