@@ -90,6 +90,7 @@ class RestProxyMixinReadOnly:
         def make_field_optional(field, default: Any = None):
             new_field = deepcopy(field)
             new_field.default = default
+            new_field.default_factory = None
             new_field.annotation = Optional[new_field.annotation]
             return new_field.annotation, new_field
 

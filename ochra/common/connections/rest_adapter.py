@@ -49,7 +49,7 @@ class RestAdapter:
             ssl_verify (bool, optional): Whether to verify SSL certificates. Defaults to True.
             logger (logging.Logger, optional): Custom logger instance. If None, a default logger is used.
         """
-        self.url = f"http://{hostname}/"
+        self.url = f"http://{hostname}"
         self._api_key = api_key
         self._ssl_verify = ssl_verify
         self._logger = logger or logging.getLogger(__name__)
@@ -84,7 +84,7 @@ class RestAdapter:
             Result: An object containing the status code, message, and data from the response if successful.
             requests.Response: The raw response object if jsonify is False.
         """
-        full_url = self.url + endpoint
+        full_url = f"{self.url.rstrip('/')}/{endpoint.lstrip('/')}"
         headers = {"x-api-key": self._api_key}
         # fix for when ep_params is empty
         log_line_pre = (
