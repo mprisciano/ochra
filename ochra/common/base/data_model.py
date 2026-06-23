@@ -1,4 +1,4 @@
-from typing import Any, Self
+from typing import Any, Optional, Self
 import uuid
 from pydantic import BaseModel, Field
 
@@ -11,13 +11,13 @@ class DataModel(BaseModel):
     id: uuid.UUID = Field(default_factory=uuid.uuid4)
     """Unique identifier for the data model instance."""
     
-    collection: str = Field(default=None)
+    collection: Optional[str] = Field(default=None)
     """The name of the collection where the data model will be stored."""
 
-    cls: str = Field(default=None)
+    cls: Optional[str] = Field(default=None)
     """The class name of the data model."""
 
-    module_path: str = Field(default=None)
+    module_path: Optional[str] = Field(default=None)
     """The module path of the data model."""
 
     def model_post_init(self, __context: Any) -> None:

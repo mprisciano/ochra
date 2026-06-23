@@ -4,7 +4,7 @@ from ochra.common.equipment.operation import Operation
 from ochra.common.spaces.station import Station
 from ochra.common.utils.mixins import RestProxyMixin
 from ochra.common.utils.enum import StationType, PatchType
-from typing import List, Type
+from typing import List, Optional, Type
 from uuid import UUID
 from pydantic import Field
 from ..storage.inventory import Inventory
@@ -18,7 +18,7 @@ class Station(Station, RestProxyMixin):
     devices: List[UUID] = Field(default_factory=list)
     """List of device IDs associated with the station."""
 
-    port: int = Field(default=None)
+    port: Optional[int] = Field(default=None)
     """Network port number for the station."""
 
     def __init__(self, name: str, type: StationType, location: Location, port: int):
